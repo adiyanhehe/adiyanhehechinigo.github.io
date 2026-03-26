@@ -9,32 +9,21 @@
 </head>
 
 <body>
-    <!-- Header -->
-    <header>
-        <a href="#" class="logo" id="logo">
-            <div class="logo-icon">中</div>
-            <span>Chinigo</span>
-        </a>
-        <div class="user-stats" id="userStats">
-            <div class="stat-item">
-                <span class="stat-value" id="heartsCount">5</span>
-                <span class="stat-label">Hearts</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value" id="xpCount">0</span>
-                <span class="stat-label">XP</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value" id="levelCount">1</span>
-                <span class="stat-label">Level</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value" id="streakCount">0</span>
-                <span class="stat-label">Streak</span>
-            </div>
-        </div>
-    </header>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">Chinigo</div>
+        <ul class="menu">
+            <li>🏠 Learn</li>
+            <li>🔤 Letters</li>
+            <li>🏆 Leaderboards</li>
+            <li>📜 Quests</li>
+            <li>🛒 Shop</li>
+            <li>👤 Profile</li>
+            <li>⋯ More</li>
+        </ul>
+    </div>
 
+    <!-- Main Content -->
     <main>
         <!-- Login Screen -->
         <div class="screen active" id="loginScreen">
@@ -55,62 +44,16 @@
 
         <!-- Dashboard -->
         <div class="screen" id="dashboardScreen">
-            <div class="card">
-                <div class="dashboard-header">
-                    <div class="welcome-section">
-                        <h1 class="card-title">Welcome back!</h1>
-                        <p style="color: #666; margin-bottom: 1rem;">Ready to learn some Chinese?</p>
-                    </div>
+            <div class="course-box">
+                SECTION 1, UNIT 1 <br>
+                Order food and drinks
+            </div>
 
-                    <div class="daily-goal-card">
-                        <div class="goal-header">
-                            <h3>Daily Goal</h3>
-                            <span class="goal-xp">100 XP</span>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar" id="dailyProgressFill"></div>
-                        </div>
-                        <div class="goal-stats">
-                            <span id="dailyProgressText">0/100 XP</span>
-                            <span class="goal-completed">Goal completed!</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <div class="stat-icon">🔥</div>
-                        <span class="stat-number" id="dashboardStreak">0</span>
-                        <div class="stat-text">Day Streak</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🏆</div>
-                        <span class="stat-number" id="dashboardLevel">1</span>
-                        <div class="stat-text">Level</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">⭐</div>
-                        <span class="stat-number" id="dashboardXP">0</span>
-                        <div class="stat-text">Total XP</div>
-                    </div>
-                </div>
-
-                <div class="dashboard-actions">
-                    <button class="btn primary-btn" id="continueBtn">
-                        <span class="btn-icon">🎯</span>
-                        Continue Learning
-                    </button>
-                    <div class="action-buttons">
-                        <button class="btn secondary" id="shopBtn">
-                            <span class="btn-icon">🛒</span>
-                            Shop
-                        </button>
-                        <button class="btn ghost" id="profileBtn">
-                            <span class="btn-icon">👤</span>
-                            Profile
-                        </button>
-                    </div>
-                </div>
+            <div class="path">
+                <div class="circle active">START</div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
             </div>
         </div>
 
@@ -121,7 +64,7 @@
                 <p style="margin-bottom: 2rem; color: #666;">Choose your next lesson</p>
 
                 <div class="level-map">
-                    <div class="path" id="levelPath">
+                    <div class="level-path" id="levelPath">
                         <!-- Level nodes will be generated here -->
                     </div>
                 </div>
@@ -305,7 +248,6 @@
             <button class="btn" onclick="closeModal('levelUpModal')">Continue</button>
         </div>
     </div>
-
     <div id="gameOverModal" class="modal">
         <div class="modal-content">
             <h2>💔 Game Over</h2>
