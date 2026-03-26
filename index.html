@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinigo - Learn Chinese</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo" id="logo">
+            <div class="logo-icon">中</div>
+            <span>Chinigo</span>
+        </a>
+        
+        <div class="user-stats" id="userStats">
+            <div class="stat-item">
+                <span class="stat-value" id="heartsCount">5</span>
+                <span class="stat-label">Hearts</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="xpCount">0</span>
+                <span class="stat-label">XP</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="levelCount">1</span>
+                <span class="stat-label">Level</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="streakCount">0</span>
+                <span class="stat-label">Streak</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Login Screen -->
+        <div class="screen active" id="loginScreen">
+            <div class="card">
+                <h1 class="card-title">欢迎! (Welcome!)</h1>
+                <p style="margin-bottom: 2rem; color: #666;">Start your Chinese learning journey</p>
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter your username">
+                </div>
+                
+                <div class="form-group">
+                    <button class="btn" id="startBtn">Start Learning</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="screen" id="dashboardScreen">
+            <div class="card">
+                <h1 class="card-title">Dashboard</h1>
+                
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <span class="stat-number" id="dashboardXP">0</span>
+                        <div class="stat-text">Total XP</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="dashboardLevel">1</span>
+                        <div class="stat-text">Level</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="dashboardStreak">0</span>
+                        <div class="stat-text">Day Streak</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="dailyGoalProgress">0%</span>
+                        <div class="stat-text">Daily Goal</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 2rem 0;">
+                    <button class="btn" id="continueBtn">Continue Learning</button>
+                    <button class="btn secondary" id="shopBtn">Shop</button>
+                    <button class="btn ghost" id="profileBtn">Profile</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level Map -->
+        <div class="screen" id="mapScreen">
+            <div class="card">
+                <h1 class="card-title">Level Map</h1>
+                <p style="margin-bottom: 2rem; color: #666;">Choose your next lesson</p>
+                
+                <div class="level-map">
+                    <div class="path" id="levelPath">
+                        <!-- Level nodes will be generated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lesson Screen -->
+        <div class="screen" id="lessonScreen">
+            <div class="card">
+                <h1 class="card-title">Lesson</h1>
+                <div class="lesson-content">
+                    <div class="word-display" id="lessonWord">你好</div>
+                    <div class="pinyin-display" id="lessonPinyin">nǐ hǎo</div>
+                    <div class="translation-display" id="lessonTranslation">Hello</div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <button class="btn" id="listenBtn">🔊 Listen</button>
+                        <button class="btn secondary" id="nextLessonBtn">Next Lesson</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div class="screen" id="quizScreen">
+            <div class="card quiz-container">
+                <h1 class="card-title">Quiz</h1>
+                <div class="question-text" id="questionText">What does this mean?</div>
+                
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Options will be generated here -->
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="quizProgress"></div>
+                </div>
+                <div style="text-align: center; color: #666; margin-bottom: 1rem;">
+                    Question <span id="questionNum">1</span> of <span id="totalQuestions">5</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Match Pairs Game -->
+        <div class="screen" id="matchScreen">
+            <div class="card">
+                <h1 class="card-title">Match Pairs</h1>
+                <p style="margin-bottom: 2rem; color: #666;">Match Chinese characters with their meanings</p>
+                
+                <div class="pairs-grid" id="pairsGrid">
+                    <!-- Cards will be generated here -->
+                </div>
+                
+                <div style="margin-top: 2rem; text-align: center;">
+                    <button class="btn" id="resetPairsBtn">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Writing Practice -->
+        <div class="screen" id="writingScreen">
+            <div class="card writing-container">
+                <h1 class="card-title">Writing Practice</h1>
+                <p style="margin-bottom: 2rem; color: #666;">Practice writing Chinese characters</p>
+                
+                <div class="writing-target" id="writingTarget">你</div>
+                
+                <canvas id="writingCanvas" width="400" height="200"></canvas>
+                
+                <div class="writing-controls">
+                    <button class="btn" id="clearCanvasBtn">Clear</button>
+                    <button class="btn secondary" id="nextCharBtn">Next Character</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shop -->
+        <div class="screen" id="shopScreen">
+            <div class="card">
+                <h1 class="card-title">Shop</h1>
+                <p style="margin-bottom: 2rem; color: #666;">Spend your XP on helpful items</p>
+                
+                <div class="shop-grid">
+                    <div class="shop-item">
+                        <h3>Extra Hearts</h3>
+                        <div class="price">+2 Hearts</div>
+                        <button class="btn" onclick="buyItem('hearts')">Buy for 50 XP</button>
+                    </div>
+                    <div class="shop-item">
+                        <h3>Streak Freeze</h3>
+                        <div class="price">Protect Streak</div>
+                        <button class="btn" onclick="buyItem('freeze')">Buy for 100 XP</button>
+                    </div>
+                    <div class="shop-item">
+                        <h3>Double XP</h3>
+                        <div class="price">2x XP (24h)</div>
+                        <button class="btn" onclick="buyItem('double')">Buy for 200 XP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="screen" id="profileScreen">
+            <div class="card">
+                <h1 class="card-title">Profile</h1>
+                
+                <div class="profile-header">
+                    <div class="avatar" id="profileAvatar">U</div>
+                    <div>
+                        <h2 id="profileUsername">User</h2>
+                        <p style="color: #666;" id="profileJoinDate">Joined: Jan 1, 2024</p>
+                    </div>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="profileTotalXP">0</span>
+                        <div class="stat-text">Total XP</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="profileLevel">1</span>
+                        <div class="stat-text">Level</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="profileStreak">0</span>
+                        <div class="stat-text">Best Streak</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="lessonsCompleted">0</span>
+                        <div class="stat-text">Lessons Completed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings -->
+        <div class="screen" id="settingsScreen">
+            <div class="card">
+                <h1 class="card-title">Settings</h1>
+                
+                <div class="setting-item">
+                    <div>
+                        <strong>Dark Mode</strong>
+                        <p style="color: #666; font-size: 0.9rem;">Switch to dark theme</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <div>
+                        <strong>Sound Effects</strong>
+                        <p style="color: #666; font-size: 0.9rem;">Enable sound effects</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="soundToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <div>
+                        <strong>Reset Progress</strong>
+                        <p style="color: #666; font-size: 0.9rem;">Clear all your progress</p>
+                    </div>
+                    <button class="btn danger" id="resetProgressBtn">Reset</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="levelUpModal" class="modal">
+        <div class="modal-content">
+            <h2>🎉 Level Up! 🎉</h2>
+            <p style="font-size: 2rem; margin: 1rem 0;">Level <span id="newLevel">2</span></p>
+            <p>You gained <span id="levelUpXP">100</span> XP!</p>
+            <button class="btn" onclick="closeModal('levelUpModal')">Continue</button>
+        </div>
+    </div>
+
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <h2>💔 Game Over</h2>
+            <p>You ran out of hearts!</p>
+            <p>Continue to restore hearts or visit the shop.</p>
+            <button class="btn" onclick="restoreHearts()">Restore Hearts (50 XP)</button>
+            <button class="btn secondary" onclick="closeModal('gameOverModal')">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
