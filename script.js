@@ -496,6 +496,99 @@ function speakText(text) {
     speechSynthesis.speak(utterance);
 }
 
+// Enhanced speech functionality for all buttons
+function addSpeechToButtons() {
+    // Add speech to lesson buttons
+    if (elements.listenBtn) {
+        elements.listenBtn.addEventListener('click', () => {
+            const word = elements.lessonWord.textContent;
+            speakText(word);
+        });
+    }
+    
+    // Add speech to quiz options
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.classList.contains('option-btn')) {
+            setTimeout(() => {
+                speakText(e.target.textContent);
+            }, 500);
+        }
+    });
+    
+    // Add speech to match pairs cards
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.classList.contains('pair-card')) {
+            setTimeout(() => {
+                speakText(e.target.textContent);
+            }, 500);
+        }
+    });
+    
+    // Add speech to level nodes
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.classList.contains('level-node')) {
+            const levelId = parseInt(e.target.textContent);
+            const level = levels.find(l => l.id === levelId);
+            if (level) {
+                setTimeout(() => {
+                    speakText(level.words[0]);
+                }, 500);
+            }
+        }
+    });
+}
+
+// Speech Recognition for speaking practice
+let recognition;
+let isListening = false;
+
+function initSpeechRecognition() {
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'zh-CN';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            checkSpeakingAnswer(transcript);
+        };
+        
+        recognition.onend = () => {
+            isListening = false;
+        };
+    }
+}
+
+function startSpeakingPractice(targetWord) {
+    if (!recognition) return;
+    
+    if (isListening) {
+        recognition.stop();
+        isListening = false;
+        return;
+    }
+    
+    recognition.start();
+    isListening = true;
+}
+
+function checkSpeakingAnswer(userAnswer) {
+    // Simple similarity check for Chinese characters
+    const targetWord = elements.lessonWord.textContent;
+    
+    // For Chinese, we'll check if the user said the correct character
+    if (userAnswer.includes(targetWord)) {
+        playSound('correct');
+        addXP(10);
+    } else {
+        playSound('wrong');
+        gameState.hearts--;
+        updateHearts();
+    }
+}
+
 function playSound(type) {
     if (!gameState.soundEnabled) return;
     
@@ -566,7 +659,25 @@ function updateDashboard() {
     elements.dashboardStreak.textContent = gameState.streak;
     
     const progress = Math.min(100, (gameState.dailyProgress / gameState.dailyGoal) * 100);
-    elements.dailyGoalProgress.textContent = `${Math.floor(progress)}%`;
+    const progressFill = document.getElementById('dailyProgressFill');
+    const progressText = document.getElementById('dailyProgressText');
+    const goalCompleted = document.querySelector('.goal-completed');
+    
+    if (progressFill) {
+        progressFill.style.width = `${progress}%`;
+    }
+    
+    if (progressText) {
+        progressText.textContent = `${gameState.dailyProgress}/${gameState.dailyGoal} XP`;
+    }
+    
+    if (goalCompleted) {
+        if (gameState.dailyProgress >= gameState.dailyGoal) {
+            goalCompleted.style.display = 'block';
+        } else {
+            goalCompleted.style.display = 'none';
+        }
+    }
 }
 
 function renderLevelMap() {
@@ -672,4 +783,18 @@ function loadGame() {
 }
 
 // Initialize the app
+function init() {
+    loadGame();
+    setupEventListeners();
+    updateUI();
+    
+    // Initialize speech functionality
+    addSpeechToButtons();
+    initSpeechRecognition();
+    
+    // Check for daily streak
+    checkDailyStreak();
+}
+
+// Call init
 init();
