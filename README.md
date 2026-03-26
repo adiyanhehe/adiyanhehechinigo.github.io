@@ -1,1 +1,1 @@
-# adiyanhehechinigo.githubio
+# adiyanhehechinigo.github.io
