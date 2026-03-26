@@ -96,6 +96,7 @@ const elements = {
     lessonPinyin: document.getElementById('lessonPinyin'),
     lessonTranslation: document.getElementById('lessonTranslation'),
     listenBtn: document.getElementById('listenBtn'),
+    confirmBtn: document.getElementById('confirmBtn'),
     nextLessonBtn: document.getElementById('nextLessonBtn'),
     
     // Quiz
@@ -154,6 +155,7 @@ function setupEventListeners() {
     
     // Lesson
     elements.listenBtn.addEventListener('click', () => speakText(elements.lessonWord.textContent));
+    elements.confirmBtn.addEventListener('click', confirmWord);
     elements.nextLessonBtn.addEventListener('click', startQuiz);
     
     // Match Pairs
@@ -213,6 +215,27 @@ function renderLesson() {
     elements.lessonWord.textContent = word.chinese;
     elements.lessonPinyin.textContent = word.pinyin;
     elements.lessonTranslation.textContent = word.english;
+    
+    // Hide confirm button initially
+    elements.confirmBtn.style.display = 'none';
+    elements.nextLessonBtn.style.display = 'inline-block';
+}
+
+function confirmWord() {
+    // Pronounce the word first
+    speakText(elements.lessonWord.textContent);
+    
+    // Show confirm button and hide next lesson button
+    elements.confirmBtn.style.display = 'inline-block';
+    elements.nextLessonBtn.style.display = 'none';
+    
+    // Add XP for confirming
+    addXP(10);
+    
+    // Enable next lesson button after a short delay
+    setTimeout(() => {
+        elements.nextLessonBtn.style.display = 'inline-block';
+    }, 2000);
 }
 
 function startQuiz() {
